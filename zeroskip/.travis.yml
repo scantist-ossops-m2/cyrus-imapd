@@ -1,0 +1,41 @@
+language: c
+dist: trusty
+group: edge
+addons:
+  apt:
+    packages:
+      - check
+      - pkg-config
+      - uuid-dev
+      - zlib1g-dev
+
+env:
+  global:
+    - USE_CCACHE=1
+    - LIBRARY_PATH=/lib/x86_64-linux-gnu/
+
+cache:
+  apt: true
+  ccache: true
+
+os: linux
+compiler: gcc
+
+install:
+  # Install required stuff
+
+before_script:
+  - ccache --version
+  - ccache --zero-stats
+  - gcc -v
+
+script:
+  - autoreconf --install
+  - ./configure
+  - make
+  - make check
+  - cat tests/test-suite.log
+
+branches:
+  only:
+    - master
