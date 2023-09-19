@@ -280,18 +280,18 @@ int zs_file_write_commit_record(struct zsdb_file *f, int final)
                 val = ((uint64_t)lc.type1 << 56); /* type 1 */
                 write_be64(ptr + pos, val);
                 pos += sizeof(uint64_t);
-                lccrc = crc32c_hw(crc, (void *)&val, sizeof(uint64_t));
+                lccrc = crc32c(crc, (void *)&val, sizeof(uint64_t));
 
                 val = lc.length;
                 write_be64(ptr + pos, val); /* length */
                 pos += sizeof(uint64_t);
-                lccrc = crc32c_hw(lccrc, (void *)&val, sizeof(uint64_t));
+                lccrc = crc32c(lccrc, (void *)&val, sizeof(uint64_t));
 
                 val = 0;
                 val = ((uint64_t)lc.type2 << 56); /* type 2 */
 
                 /* The final CRC  */
-                lccrc = crc32c_hw(lccrc, (void *)&val, sizeof(uint64_t));
+                lccrc = crc32c(lccrc, (void *)&val, sizeof(uint64_t));
                 lc.crc32 = lccrc;
 
                 val |= (uint64_t)lc.crc32;        /* crc */
@@ -315,7 +315,7 @@ int zs_file_write_commit_record(struct zsdb_file *f, int final)
                 val = ((uint64_t)sc.type << 56);               /* type */
                 val |= ((uint64_t)sc.length << 32);            /* length */
                 /* The final CRC  */
-                sccrc = crc32c_hw(crc, (void *)&val, sizeof(uint64_t));
+                sccrc = crc32c(crc, (void *)&val, sizeof(uint64_t));
 
                 sc.crc32 = sccrc;
 

@@ -44,6 +44,7 @@ static void usage(const char *progname)
 
 static int run_hardware(void)
 {
+#ifdef HAVE_SSE42
         uint64_t start, finish;
         uint32_t bytes = 0;
 
@@ -55,6 +56,9 @@ static int run_hardware(void)
 
         fprintf(stderr, "crc32c_hw       : %u bytes in %" PRIu64 " μs.\n",
                 bytes, (finish - start));
+#else
+        fprintf(stderr, "crc32c_hw       : not supported\n");
+#endif
         fprintf(stdout, "------------------------------------------------\n");
         return 0;
 }
@@ -66,7 +70,7 @@ static int run_software(void)
 
         start = get_time_now();
         for (int i = 0; i < NUM_RUNS; i++) {
-                bytes += crc32c_hw(0, buf, strlen(buf));
+                bytes += crc32c_sw(0, buf, strlen(buf));
         }
         finish = get_time_now();
 

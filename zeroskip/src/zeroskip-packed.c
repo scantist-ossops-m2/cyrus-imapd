@@ -295,21 +295,21 @@ int zs_packed_file_open(const char *path,
 
                 /* compute the crc */
                 /* data */
-                crc = crc32c_hw(0, (void *)(f->mf->ptr + offset), (end_offset - offset));
+                crc = crc32c(0, (void *)(f->mf->ptr + offset), (end_offset - offset));
 
                 /* type1 */
                 t_data = read_be64(dataptr);
-                crc = crc32c_hw(crc, (void *)&t_data, sizeof(uint64_t));
+                crc = crc32c(crc, (void *)&t_data, sizeof(uint64_t));
                 dataptr = dataptr + sizeof(uint64_t);
 
                 /* len */
                 t_data = read_be64(dataptr);
-                crc = crc32c_hw(crc, (void *)&t_data, sizeof(uint64_t));
+                crc = crc32c(crc, (void *)&t_data, sizeof(uint64_t));
                 dataptr = dataptr + sizeof(uint64_t);
 
                 /* type 2 */
                 t_data = read_be64(dataptr) & 0xFF00000000000000;
-                crc = crc32c_hw(crc, (void *)&t_data, sizeof(uint64_t));
+                crc = crc32c(crc, (void *)&t_data, sizeof(uint64_t));
 
         } else if (commit_rec_type == REC_TYPE_FINAL) {
                 unsigned char *dataptr;
@@ -320,11 +320,11 @@ int zs_packed_file_open(const char *path,
 
                 /* compute the crc */
                 /* data */
-                crc = crc32c_hw(0, (void *)(f->mf->ptr + offset), (end_offset - offset));
+                crc = crc32c(0, (void *)(f->mf->ptr + offset), (end_offset - offset));
 
                 /* type & len */
                 t_data = read_be64(dataptr) & 0xFFFFFFFF00000000;
-                crc = crc32c_hw(crc, (void *)&t_data, sizeof(uint64_t));
+                crc = crc32c(crc, (void *)&t_data, sizeof(uint64_t));
         } else {
                 /* Should not reach here */
                 abort();

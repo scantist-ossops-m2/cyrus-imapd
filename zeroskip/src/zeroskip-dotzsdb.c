@@ -103,17 +103,17 @@ int zs_dotzsdb_create(struct zsdb_priv *priv)
         sptr += sizeof(uint32_t);
 
         /* CRC */
-        priv->dotzsdb.crc = crc32c_hw(0, 0, 0);
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(0, 0, 0);
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.signature,
                                       sizeof(uint64_t));
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.offset,
                                       sizeof(uint64_t));
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.uuidstr,
                                       UUID_STRLEN);
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.curidx,
                                       sizeof(uint32_t));
         *((uint32_t *)sptr) = hton32(priv->dotzsdb.crc);
@@ -202,14 +202,14 @@ int zs_dotzsdb_validate(struct zsdb_priv *priv)
                 priv->dotzsdb.curidx = ntoh32(dothdr->curidx);
 
                 /* Verify CRC */
-                crc = crc32c_hw(0, 0, 0);
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.signature,
+                crc = crc32c(0, 0, 0);
+                crc = crc32c(crc, (void *)&priv->dotzsdb.signature,
                                 sizeof(uint64_t));
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.offset,
+                crc = crc32c(crc, (void *)&priv->dotzsdb.offset,
                                 sizeof(uint64_t));
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.uuidstr,
+                crc = crc32c(crc, (void *)&priv->dotzsdb.uuidstr,
                                 UUID_STRLEN);
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.curidx,
+                crc = crc32c(crc, (void *)&priv->dotzsdb.curidx,
                                 sizeof(uint32_t));
 
                 if (crc != ntoh32(dothdr->crc)) {
@@ -427,14 +427,14 @@ int zs_dotzsdb_update_begin(struct zsdb_priv *priv)
                 priv->dotzsdb.curidx = ntoh32(dothdr->curidx);
 
                 /* Verify CRC */
-                crc = crc32c_hw(0, 0, 0);
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.signature,
+                crc = crc32c(0, 0, 0);
+                crc = crc32c(crc, (void *)&priv->dotzsdb.signature,
                                 sizeof(uint64_t));
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.offset,
+                crc = crc32c(crc, (void *)&priv->dotzsdb.offset,
                                 sizeof(uint64_t));
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.uuidstr,
+                crc = crc32c(crc, (void *)&priv->dotzsdb.uuidstr,
                                 UUID_STRLEN);
-                crc = crc32c_hw(crc, (void *)&priv->dotzsdb.curidx,
+                crc = crc32c(crc, (void *)&priv->dotzsdb.curidx,
                                 sizeof(uint32_t));
 
                 if (crc != ntoh32(dothdr->crc)) {
@@ -512,17 +512,17 @@ int zs_dotzsdb_update_end(struct zsdb_priv *priv)
         sptr += sizeof(uint32_t);
 
         /* CRC */
-        priv->dotzsdb.crc = crc32c_hw(0, 0, 0);
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(0, 0, 0);
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.signature,
                                       sizeof(uint64_t));
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.offset,
                                       sizeof(uint64_t));
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.uuidstr,
                                       UUID_STRLEN);
-        priv->dotzsdb.crc = crc32c_hw(priv->dotzsdb.crc,
+        priv->dotzsdb.crc = crc32c(priv->dotzsdb.crc,
                                       (void *)&priv->dotzsdb.curidx,
                                       sizeof(uint32_t));
 

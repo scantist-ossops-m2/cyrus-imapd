@@ -15,7 +15,9 @@
 extern void crc32c_init(void);
 
 extern uint32_t crc32c_sw(uint32_t crc, const void *buf, size_t len);
+#ifdef HAVE_SSE42
 extern uint32_t crc32c_hw(uint32_t crc, const void *buf, size_t len);
+#endif
 
 extern uint32_t crc32c(uint32_t crc, const void *buf, size_t len);
 extern uint32_t crc32c_map(const char *base, unsigned len);

@@ -535,7 +535,7 @@ uint32_t crc32_end(struct mfile **mfp)
 {
         if ((*mfp)->compute_crc) {
                 (*mfp)->crc32_data_len = (*mfp)->offset - (*mfp)->crc32_begin_offset;
-                (*mfp)->crc32 = crc32c_hw((*mfp)->crc32,
+                (*mfp)->crc32 = crc32c((*mfp)->crc32,
                                           ((*mfp)->ptr + (*mfp)->crc32_begin_offset),
                                           (*mfp)->crc32_data_len);
                 (*mfp)->compute_crc = 0;
