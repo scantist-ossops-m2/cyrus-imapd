@@ -2061,6 +2061,8 @@ static void cmdloop(void)
                 snmp_increment(SCAN_COUNT, 1);
             }
             else if (!strcmp(cmd.s, "Syncapply")) {
+                if (!imapd_userisadmin) goto badcmd;
+
                 struct dlist *kl = sync_parseline(imapd_in);
 
                 if (kl) {
@@ -2070,6 +2072,8 @@ static void cmdloop(void)
                 else goto extraargs;
             }
             else if (!strcmp(cmd.s, "Syncget")) {
+                if (!imapd_userisadmin) goto badcmd;
+
                 struct dlist *kl = sync_parseline(imapd_in);
 
                 if (kl) {
@@ -2079,6 +2083,8 @@ static void cmdloop(void)
                 else goto extraargs;
             }
             else if (!strcmp(cmd.s, "Syncrestart")) {
+                if (!imapd_userisadmin) goto badcmd;
+
                 if (c == '\r') c = prot_getc(imapd_in);
                 if (c != '\n') goto extraargs;
 
@@ -2086,6 +2092,8 @@ static void cmdloop(void)
                 cmd_syncrestart(tag.s, &reserve_list, 1);
             }
             else if (!strcmp(cmd.s, "Syncrestore")) {
+                if (!imapd_userisadmin) goto badcmd;
+
                 struct dlist *kl = sync_parseline(imapd_in);
 
                 if (kl) {
