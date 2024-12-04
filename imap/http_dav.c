@@ -4713,6 +4713,7 @@ int meth_get_head(struct transaction_t *txn, void *params)
         resp_body->lastmod = lastmod;
         resp_body->maxage = 3600;       /* 1 hr */
         txn->flags.cc |= CC_MAXAGE | CC_REVALIDATE;  /* don't use stale data */
+        if (httpd_userid) txn->flags.cc |= CC_PRIVATE;
 
         if (precond != HTTP_NOT_MODIFIED && record.uid) break;
 
@@ -5822,6 +5823,7 @@ int meth_proppatch(struct transaction_t *txn, void *params)
 
     /* Response should not be cached */
     txn->flags.cc |= CC_NOCACHE;
+    if (httpd_userid) txn->flags.cc |= CC_PRIVATE;
 
     /* Parse the path */
     if ((r = pparams->parse_path(txn->req_uri->path,
@@ -6779,6 +6781,7 @@ int meth_patch(struct transaction_t *txn, void *params)
             txn->flags.cc = CC_MAXAGE
                 | CC_REVALIDATE         /* don't use stale data */
                 | CC_NOTRANSFORM;       /* don't alter iCal data */
+            if (httpd_userid) txn->flags.cc |= CC_PRIVATE;
 
             /* Output current representation */
             write_body(ret, txn, buf_base(data), buf_len(data));
